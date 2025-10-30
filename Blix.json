@@ -1,0 +1,228 @@
+{
+  "name": "Blix",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "formulario",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "eb8c4891-3b31-486b-b2a0-7235a3961082",
+      "name": "Webhook",
+      "webhookId": "601ecf3e-d22b-4906-91ad-aa14b67e4a03"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1TMy2Y554RelTQXhDr8h8dBLrhCCKu3kIdWxjGqdySgU",
+          "mode": "list",
+          "cachedResultName": "n8n (respostas)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TMy2Y554RelTQXhDr8h8dBLrhCCKu3kIdWxjGqdySgU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1694339886,
+          "mode": "list",
+          "cachedResultName": "Respostas ao formulário 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TMy2Y554RelTQXhDr8h8dBLrhCCKu3kIdWxjGqdySgU/edit#gid=1694339886"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Anexo": "={{ $json.body.Anexo[0] }}",
+            "Telefone": "={{ $json.body.Telefone[0] }}",
+            "Descrição": "={{ $json.body['Descrição'][0] }}",
+            "Assunto": "={{ $json.body.Assunto[0] }}",
+            "E-mail": "={{ $json.body['E-mail'][0] }}",
+            "Nome": "={{ $json.body.Nome[0] }}",
+            "Carimbo de data/hora": "={{ $json.body['Carimbo de data/hora'][0] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Carimbo de data/hora",
+              "displayName": "Carimbo de data/hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Assunto",
+              "displayName": "Assunto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Descrição",
+              "displayName": "Descrição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anexo",
+              "displayName": "Anexo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2d331072-4564-4e22-9a11-b0590ddc59cd",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YDzM2MF0CKGUTpWa",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "listId": "69027a3d56a8b7ea7305da06",
+        "name": "Blix - Desafio ",
+        "description": "=Nome: {{ $json.Nome }}\nE-mail: {{ $json['E-mail'] }}\nTelefone: {{ $json.Telefone }}\n\nAssunto: {{ $json.Assunto }}\nDescrição: {{ $json['Descrição'] }}\n\nAnexo: {{ $json.Anexo }}\n\nData: {{ $json['Carimbo de data/hora'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "b14ab263-8322-400f-96e7-2bea58ee35a8",
+      "name": "Criar Card",
+      "credentials": {
+        "trelloApi": {
+          "id": "kFLcXKr0VyXXVAB6",
+          "name": "Trello account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "bryan.assuncao.dev@gmail.com",
+        "subject": "Formulário Preenchido",
+        "message": "=<!DOCTYPE html> <html lang=\"pt-BR\">   <head>     <meta charset=\"UTF-8\">     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">     <title>Formulário Recebido</title>   </head>   <body style=\"font-family: Arial, sans-serif; background-color: #f7f9fc; margin: 0; padding: 20px;\">     <table align=\"center\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 600px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 30px;\">       <tr>         <td align=\"center\" style=\"padding-bottom: 20px;\">           <h2 style=\"color: #0b98e0; margin: 0;\">📋 Novo Formulário Recebido</h2>         </td>       </tr>       <tr>         <td style=\"font-size: 16px; color: #333333; line-height: 1.6;\">           <p>             O formulário foi preenchido por              <strong style=\"color: #0b98e0;\">{{ $('Append row in sheet').item.json.Nome }}</strong>           </p>           <p>             em              <strong style=\"color: #23314c;\">{{ $('Append row in sheet').item.json['Carimbo de data/hora'] }}</strong>.           </p>         </td>       </tr>       <tr>         <td align=\"center\" style=\"padding-top: 30px;\">           <a href=\"#\" style=\"background-color: #0b98e0; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold;\">Ver Detalhes</a>         </td>       </tr>     </table>     <p style=\"text-align: center; color: #888888; font-size: 12px; margin-top: 20px;\">       Este é um e-mail automático. Por favor, não responda.     </p>   </body> </html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        704,
+        0
+      ],
+      "id": "7fec87a5-fc74-4496-941e-a864a4db4038",
+      "name": "Send a message",
+      "webhookId": "a2f777da-077b-45f8-aa91-06577ba2795f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qyKfwVLD6Ya3LM6c",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Card": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Criar Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c96febc1-4541-4534-ac18-91eba1125a7d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9ac0eb134fdcc9c2dc2e77c73dccc684d136f9e7cab20c7801eb692908416f92"
+  },
+  "id": "pDOLCmpaZXHAhRu8",
+  "tags": []
+}
